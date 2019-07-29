@@ -43,7 +43,7 @@ optional arguments:
 ## Installation
 (in order to avoid missing with the already installed python libraries)
 
- - get project `git clone https://github.com/SecurityFTW/cs-suite.git &&
+ - get project `git clone --recursive https://github.com/SecurityFTW/cs-suite.git &&
 cd cs-suite/`   
  - install [virtualenv](https://virtualenv.pypa.io/en/latest/) `pip install virtualenv`
  - create a python 2.7 local enviroment `virtualenv -p python2.7 venv`  
@@ -59,8 +59,7 @@ cd cs-suite/`
 ### GCP Configuration
 - create a [project](https://cloud.google.com/resource-manager/docs/creating-managing-projects) in GCP
 - enable the [Cloud resource manager API](https://console.cloud.google.com/apis/api/cloudresourcemanager.googleapis.com/overview)
-- create a [service account](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys), download its key JSON and place it on the root of this project (example `cs-suite/keyfile.json`)
-- set GOOGLE\_APPLICATION\_CREDENTIALS enviromental variable to you keyfile.json path `export GOOGLE_APPLICATION_CREDENTIALS=~/cs-suite/keyfile.json`
+- create a [service account](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys), download its key JSON and place it under `cs-suite/tools/G-Scout/keyfile.json`)
 - Install [google cloud sdk](https://cloud.google.com/sdk/install#installation_options)
 - configure google clound sdk `gcloud init`  
 
@@ -90,11 +89,12 @@ cd cs-suite/`
 
 ## Running cs-suite
 
-```bash
+```
 To run AWS Audit - python cs.py -env aws
 To run GCP Audit - python cs.py -env gcp -pId <project_name>
 To run Azure Audit - python cs.py -env azure
 ```
+
 - The final report will be available in `reports` directory
 
 - The final AWS Audit report looks like below:
@@ -112,28 +112,28 @@ To run Azure Audit - python cs.py -env azure
 
 - The `config` file looks like below
 
-```bash
+```
 $ cat aws/config
 
 [default]
 output = json
 region = us-east-1
-
 ```
 - The `credentials` file looks like below
 
-```bash
+```
 $ cat aws/credentials
 
 [default]
 aws_access_key_id = XXXXXXXXXXXXXXX
 aws_secret_access_key = XXXXXXXXXXXXXXXXXXXXXXXXX
 ```
+
 ***Note: This tool requires `arn:aws:iam::aws:policy/ReadOnlyAccess` IAM policy***
 
 - Then run the follwing docker command to start (passing your specific enviroment)
 
-```bash
+```
 docker run -v `pwd`/aws:/root/.aws -v `pwd`/reports:/app/reports securityftw/cs-suite -env aws
 ```
 
